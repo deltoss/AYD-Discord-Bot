@@ -1,6 +1,10 @@
 # Discord bot
 
-A bot that lets you create & join groups. It uses `NeDB` as the data store, which is basically a `NoSQL` equivalent of `SQLite`.
+A bot that:
+
+- Lets you create & join groups.
+  - It uses `NeDB` as the data store, which is basically a `NoSQL` equivalent of `SQLite`.
+- Talks back to YogaDelt cultists to convert them to pure innocent AYD citizens.
 
 > Note 📜
 >
