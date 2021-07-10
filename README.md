@@ -3,10 +3,11 @@
 A bot that:
 
 - Lets you create & join groups.
-  - It uses `NeDB` as the data store, which is basically a `NoSQL` equivalent of `SQLite`.
 - Talks back to YogaDelt cultists to convert them to pure innocent AYD citizens.
 
 > Note 📜
+>
+> This bot uses `NeDB` as the data store, which is basically a `NoSQL` equivalent of `SQLite`.
 >
 > This bot uses the unofficial [nedb-async](https://www.npmjs.com/package/nedb-async) package instead of the official [nedb](https://www.npmjs.com/search?q=neDB) package for `async/await` support, which makes the codebase cleaner & easier to understand.
 
