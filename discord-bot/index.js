@@ -75,7 +75,7 @@ client.on("messageCreate", function(message) {
   }
 
   lastResponseTime = now;
-  const responseNumber = Math.floor(Math.random() * 2);
+  const responseNumber = Math.floor(Math.random() * 3);
 
   if (responseNumber === 0)
     message.reply(`\nThe YogaDelt cult is shady & cursed. ${sweatEmoji}`
