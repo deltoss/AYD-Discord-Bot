@@ -52,7 +52,7 @@ client.on('interactionCreate', async (interaction) => {
   await handleCommandAsync(interaction);
 });
 
-const yogaRegex = new RegExp(/[y🇾][\s\S]{0,3}[o0🇴][\s\S]{0,3}[g🇬][\s\S]{0,3}[a🇦]/, 'mi')
+const yogaRegex = new RegExp(/[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
 const disgustEmoji = '<:pikayuck:859665554708365312>'
 const threatenEmoji = '<:whiteboxplz:859665553852989460>'
 const pumpedEmoji = '<:lavifire:859666537061285899>'
