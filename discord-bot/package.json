@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "start:prod": "pm2 start index.js",
+    "stop:prod": "pm2 stop index.js"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +14,7 @@
   "dependencies": {
     "discord.js": "^13.0.0-dev.7e30011.1625338909",
     "dotenv": "^10.0.0",
-    "nedb-async": "^0.1.6"
+    "nedb-async": "^0.1.6",
+    "pm2": "^5.1.0"
   }
 }
