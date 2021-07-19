@@ -1,13 +1,13 @@
 const path = require('path')
-const { Client, Intents } = require('discord.js');
-const { handleCommandAsync, commands } = require('./commands/index')
-
 // Load values from `.env` file.
 //
 // Note the path is provided explicitly, so it doesn't try to find
 // the `.env` file from the executing directory, which can be
 // different from the project directory
 require('dotenv').config({ path: path.join(__dirname, '/.env') });
+
+const { Client, Intents } = require('discord.js');
+const { handleCommandAsync, commands } = require('./commands/index')
 
 // For list of available intents, see:
 //   https://discord.com/developers/docs/topics/gateway#list-of-intents
