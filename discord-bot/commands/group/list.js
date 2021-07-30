@@ -39,15 +39,19 @@ module.exports = {
         interaction.reply(`The group _${escapeDiscord(groupName)}_ doesn't exist.`);
         return;
       }
-  
+
+      // Defer the response, which responds to the user saying the command is thinking.
+      // This gives you more time then the default 3s to respond to an command.
+      await interaction.defer();
+
       let groupMemberListMessage = `Here's all the members of _${escapeDiscord(group.name)}_:\n`;
       for (let i = 0; i < group.members.length ; i++) {
         let member = group.members[i];
-        let guildMember = await guild.members.fetch({ user: member.id });
+        let guildMember = await guild.members.fetch({ user: member.id, force: true });
         groupMemberListMessage = groupMemberListMessage + `\n> ${i + 1}. ${escapeDiscord(guildMember.displayName)}`;
       }
   
-      interaction.reply(groupMemberListMessage);
+      interaction.editReply(groupMemberListMessage);
     }
   }
 }
