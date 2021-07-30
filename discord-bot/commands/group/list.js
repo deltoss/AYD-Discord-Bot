@@ -43,7 +43,7 @@ module.exports = {
       let groupMemberListMessage = `Here's all the members of _${escapeDiscord(group.name)}_:\n`;
       for (let i = 0; i < group.members.length ; i++) {
         let member = group.members[i];
-        let guildMember = await guild.members.fetch({ user: member.id, force: true });
+        let guildMember = await guild.members.fetch({ user: member.id });
         groupMemberListMessage = groupMemberListMessage + `\n> ${i + 1}. ${escapeDiscord(guildMember.displayName)}`;
       }
   
