@@ -32,7 +32,7 @@ module.exports = {
     } else {
       let { value: groupName } = groupNameParam;
       let groupNameRegex = new RegExp(`^${escapeRegExp(groupName)}`, 'i')
-      let guild = client.guilds.cache.get(interaction.guildID)
+      let guild = client.guilds.cache.get(interaction.guildId)
   
       let group = await db.groups.asyncFindOne({ name: groupNameRegex });
       if (!group) {

@@ -39,7 +39,8 @@ client.on('ready', async () => {
   // Alternatively, if you have many guilds using your bot, you can look into
   // using global level slash commands instead of guild level slash commands.
   // They have up to a 1 hour delay to propagate to all the guilds, however.
-  let guilds = (await client.guilds.fetch()).array();
+  let guildCollection = await client.guilds.fetch();
+  let guilds = Array.from(guildCollection.values());
   for (let i = 0; i < guilds.length; i++) {
     let guild = guilds[i];
     await setSlashCommandsAsync(guild.id);

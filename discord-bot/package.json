@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^13.0.0-dev.7e30011.1625338909",
+    "discord.js": "^13.0.0-dev.t1627689836.ee3cdc8",
     "dotenv": "^10.0.0",
     "nedb-async": "^0.1.6",
     "pm2": "^5.1.0"
