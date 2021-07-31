@@ -15,8 +15,9 @@ module.exports = {
     const groupNameParam = interaction.options.get('group_name');
 
     if (!groupNameParam) {
-      let groups = await db.groups.asyncFind({}, [['sort', { name: 1 }], ['limit', 1000]])
-  
+      let groups = await db.groups.asyncFind({}, [['limit', 1000]])
+      groups.sort((a, b) => b.members.length - a.members.length); // Sort my number of members
+
       if (groups.length === 0) {
         interaction.reply(`There's no groups available.`);
         return;
@@ -24,8 +25,20 @@ module.exports = {
       
       let groupListMessage = 'Here\'s all the groups:\n';
   
-      groups.forEach((group) => {
-        groupListMessage = groupListMessage + `\n> ${escapeDiscord(group.name)}`;
+      groups.forEach((group, index) => {
+        let symbol = '👨‍👦';
+        switch (index) {
+          case 0:
+            symbol = '🥇';
+            break;
+          case 1:
+            symbol = '🥈';
+            break;
+          case 2:
+            symbol = '🥉';
+            break;
+        }
+        groupListMessage = groupListMessage + `\n> ${symbol} \`${group.members.length}\`: ${escapeDiscord(group.name)}`;
       });
   
       interaction.reply(groupListMessage);
