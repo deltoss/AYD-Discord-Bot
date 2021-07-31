@@ -36,6 +36,7 @@ module.exports = {
     } else {
       await db.groups.asyncInsert({
         name: groupName,
+        createdAt: Date.now(),
         members: [user]
       });
       interaction.reply(`You have created a new group _${escapeDiscord(groupName)}_!`);
