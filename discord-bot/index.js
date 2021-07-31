@@ -52,6 +52,7 @@ client.on('interactionCreate', async (interaction) => {
   await handleCommandAsync(interaction);
 });
 
+const antiYogaRegex = new RegExp(/[A][\s]*[N][\s]*[T][\s]*[I][\s]*[-]?[\s]*[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
 const yogaRegex = new RegExp(/[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
 const disgustEmoji = '<:pikayuck:859665554708365312>'
 const threatenEmoji = '<:whiteboxplz:859665553852989460>'
@@ -66,6 +67,10 @@ client.on("messageCreate", function(message) {
   if (message.author.bot) return;
 
   if (!yogaRegex.test(message.content)) {
+    return;
+  }
+
+  if (antiYogaRegex.test(message.content)) {
     return;
   }
 
