@@ -52,7 +52,7 @@ const handleCommandAsync = async (interaction) => {
   // call the command
   try {
     await command.executeAsync(interaction);
-  } catch (e) {
+  } catch (err) {
     // something wrong, this stops the command crashing the app
     console.error(`Error handling the command '${command.name}'`);
     console.error(err);
