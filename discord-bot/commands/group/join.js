@@ -39,7 +39,11 @@ module.exports = {
         createdAt: Date.now(),
         members: [user]
       });
-      interaction.reply(`You have created a new group _${escapeDiscord(groupName)}_!`);
+      interaction.reply(`You have created a new group _${escapeDiscord(groupName)}_!\n`
+        + `\n> Important ⚠`
+        + `\n> `
+        + `\n> If you don't have 4 members or more by 1 week's time, your group will be automatically disbanded & deleted.`
+      );
     }
   }
 }
