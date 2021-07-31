@@ -18,6 +18,32 @@ for (const folder of commandFolders) {
   }
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+const handleErrorReply = async (interaction, errorMsg) => {
+  let errorMessage = `An error occurred fulfilling your command: \`${errorMsg}\`.`;
+
+  if (interaction.deferred || interaction.replied) {
+    await interaction.editReply(errorMessage)
+    if (!interaction.ephemeral) {
+      await sleep(2000)
+      interaction.editReply(`${errorMessage}\n**Deleting in 5...**`)
+      await sleep(1000)
+      interaction.editReply(`${errorMessage}\n**Deleting in 4...**`)
+      await sleep(1000)
+      interaction.editReply(`${errorMessage}\n**Deleting in 3...**`)
+      await sleep(1000)
+      interaction.editReply(`${errorMessage}\n**Deleting in 2...**`)
+      await sleep(1000)
+      interaction.editReply(`${errorMessage}\n**Deleting in 1...**`)
+      await sleep(1000)
+      await interaction.deleteReply();
+    }
+  }
+  else {
+    await interaction.reply({ content: errorMessage, ephemeral: true })
+  }
+};
+
 const handleCommandAsync = async (interaction) => {
   // check if command exists
   const command = commands[interaction.commandName];
@@ -28,8 +54,9 @@ const handleCommandAsync = async (interaction) => {
     await command.executeAsync(interaction);
   } catch (e) {
     // something wrong, this stops the command crashing the app
-    console.error(e);
-    interaction.reply('there was an error trying to execute that command!');
+    console.error(`Error handling the command '${command.name}'`);
+    console.error(err);
+    handleErrorReply(interaction, err.message);
   }
 };
 
