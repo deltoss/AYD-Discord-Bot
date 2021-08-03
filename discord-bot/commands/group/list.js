@@ -3,7 +3,7 @@ const { escapeRegExp, escapeDiscord } = require('../../scripts/helper');
 
 const cleanupGroups = async () => {
   let cutOffDate = new Date();
-  cutOffDate.setDate(cutOffDate.getDate() - 7);
+  cutOffDate.setDate(cutOffDate.getDate() - 3);
   let cutOffDateInMilliseconds = cutOffDate.valueOf();
 
   await db.groups.asyncRemove({ createdAt: { $lt: cutOffDateInMilliseconds}, members: { $size: 1 } }, { multi: true })
