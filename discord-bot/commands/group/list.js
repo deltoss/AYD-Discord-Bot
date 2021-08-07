@@ -41,19 +41,14 @@ module.exports = {
       let groupListMessage = 'Here\'s all the groups:\n';
   
       groups.forEach((group, index) => {
-        let symbol = '👨‍👦';
-        switch (index) {
-          case 0:
-            symbol = '🥇';
-            break;
-          case 1:
-            symbol = '🥈';
-            break;
-          case 2:
-            symbol = '🥉';
-            break;
-        }
-        groupListMessage = groupListMessage + `\n> ${symbol} \`${group.members.length}\`: ${escapeDiscord(group.name)}`;
+        let symbol = '👨‍👦‍👦';
+        if (index === 0)
+          symbol = '🥇'
+        else if (index === 1)
+          symbol = '🥈'
+        else if (index === 2)
+          symbol = '🥉'
+        groupListMessage = groupListMessage + `\n> ${symbol} \`${group.memberCount}\`: ${escapeDiscord(group.name)}`;
       });
   
       interaction.editReply(groupListMessage);
