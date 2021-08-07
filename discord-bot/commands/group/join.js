@@ -46,7 +46,7 @@ module.exports = {
       interaction.reply(`You have created a new group _${escapeDiscord(groupName)}_!\n`
         + `\n> Important ⚠`
         + `\n> `
-        + `\n> If you don't have 4 members or more by 1 week's time, your group will be automatically disbanded & deleted.`
+        + `\n> If you don't have 4 members or more by 3 days time, your group will be automatically disbanded & deleted.`
       );
     }
   }
