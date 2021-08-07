@@ -31,13 +31,17 @@ module.exports = {
         return;
       }
   
-      await db.groups.asyncUpdate({ _id: group._id }, { $push: { members: user } }, {});
+      await db.groups.asyncUpdate({ _id: group._id }, {
+        $push: { members: user },
+        $set: { memberCount: group.members.length + 1 }
+      }, {});
       interaction.reply(`You have joined the group _${escapeDiscord(group.name)}_!`);
     } else {
       await db.groups.asyncInsert({
         name: groupName,
         createdAt: Date.now(),
-        members: [user]
+        members: [user],
+        memberCount: 1
       });
       interaction.reply(`You have created a new group _${escapeDiscord(groupName)}_!\n`
         + `\n> Important ⚠`

@@ -31,8 +31,7 @@ module.exports = {
     await cleanupGroups();
 
     if (!groupNameParam) {
-      let groups = await db.groups.asyncFind({}, [['limit', 1000]])
-      groups.sort((a, b) => b.members.length - a.members.length); // Sort my number of members
+      let groups = await db.groups.asyncFind({}, [['sort', { memberCount: -1 }], ['limit', 1000]])
 
       if (groups.length === 0) {
         interaction.editReply(`There's no groups available.`);

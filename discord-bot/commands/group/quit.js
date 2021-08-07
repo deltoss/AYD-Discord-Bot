@@ -25,7 +25,10 @@ module.exports = {
       }
   
       if (group.members.length > 1) {
-        await db.groups.asyncUpdate({ _id: group._id }, { $pull: { members: { id: interaction.user.id } } }, {});
+        await db.groups.asyncUpdate({ _id: group._id }, {
+          $pull: { members: { id: interaction.user.id } },
+          $set: { memberCount: group.members.length - 1 }
+        }, {});
         interaction.reply(`You have quit the group _${escapeDiscord(group.name)}_!`);
       } else {
         await db.groups.asyncRemove({ _id: group._id }, {});
