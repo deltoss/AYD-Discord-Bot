@@ -1,5 +1,13 @@
 const db = require('../../scripts/database');
+const { MessageActionRow } = require('discord.js');
 const { escapeRegExp, escapeDiscord } = require('../../scripts/helper');
+const { createPaginationCollectorAsync } = require('../../scripts/discord/pagination-helpers')
+const {
+  createFirstPageButton,
+  createPrevPageButton,
+  createNextPageButton,
+  createLastPageButton
+} = require('../../scripts/discord/pagination-buttons')
 
 const cleanupGroupsAsync = async () => {
   let cutOffDate = new Date();
@@ -11,28 +19,77 @@ const cleanupGroupsAsync = async () => {
   await db.groups.asyncRemove({ createdAt: { $lt: cutOffDateInMilliseconds}, members: { $size: 3 } }, { multi: true })
 }
 
-const listGroupsAsync = async (interaction) => {
-  let groups = await db.groups.asyncFind({}, [['sort', { memberCount: -1 }], ['limit', 1000]])
+const buildListGroupMembersMessageAsync = async (pageNo, itemsPerPage, noOfPages) => {
+  let groups = await db.groups.asyncFind({}, [
+    ['sort', { memberCount: -1 }],
+    ['limit', itemsPerPage],
+    ['skip', (pageNo - 1) * itemsPerPage]
+  ])
 
-  if (groups.length === 0) {
-    interaction.editReply(`There's no groups available.`);
-    return;
-  }
-  
+  if (groups.length === 0)
+    return `There's no groups available.`;
+
   let groupListMessage = 'Here\'s all the groups:\n';
 
   groups.forEach((group, index) => {
     let symbol = '👨‍👦‍👦';
-    if (index === 0)
-      symbol = '🥇'
-    else if (index === 1)
-      symbol = '🥈'
-    else if (index === 2)
-      symbol = '🥉'
+    if (pageNo === 1) {
+      if (index === 0)
+        symbol = '🥇'
+      else if (index === 1)
+        symbol = '🥈'
+      else if (index === 2)
+        symbol = '🥉'
+    }
     groupListMessage = groupListMessage + `\n> ${symbol} \`${group.memberCount}\`: ${escapeDiscord(group.name)}`;
   });
 
-  interaction.editReply(groupListMessage);
+  groupListMessage = groupListMessage + `\n\n Page ${pageNo} of ${noOfPages}.`;
+  return groupListMessage;
+}
+
+const listGroupsAsync = async (interaction) => {
+  const itemsPerPage = 10;
+
+  let message = await buildListGroupMembersMessageAsync(1, itemsPerPage);
+
+  let paginationButtons = [
+    createFirstPageButton(interaction).setDisabled(true),
+    createPrevPageButton(interaction).setDisabled(true),
+    createNextPageButton(interaction),
+    createLastPageButton(interaction)
+  ];
+  let [firstPageBtn, prevPageBtn, nextPageBtn, lastPageBtn] = paginationButtons;
+
+  const refreshPage = await createPaginationCollectorAsync(interaction, {
+    firstPageButton: firstPageBtn,
+    prevPageButton: prevPageBtn,
+    nextPageButton: nextPageBtn,
+    lastPageButton: lastPageBtn,
+    noOfPages: async () => {
+      let groupCount = await db.groups.asyncCount({});
+      groupCount = groupCount || 1;
+      return Math.ceil(groupCount / itemsPerPage);
+    },
+    paginationCallback: async (i, {
+      pageNo,
+      noOfPages,
+      paginationRow,
+      paginationType
+    }) => {
+      let messageOptions = {
+        content: await buildListGroupMembersMessageAsync(pageNo, itemsPerPage, noOfPages),
+        components: [paginationRow]
+      };
+
+      if (paginationType === 'init')
+        i.editReply(messageOptions);
+      else
+        i.update(messageOptions);
+    },
+  })
+
+  refreshPage(interaction)
 }
 
 const listGroupMembersAsync = async (interaction, groupName) => {
