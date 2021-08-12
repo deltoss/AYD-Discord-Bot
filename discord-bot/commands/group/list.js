@@ -1,5 +1,4 @@
 const db = require('../../scripts/database');
-const { MessageActionRow } = require('discord.js');
 const { escapeRegExp, escapeDiscord } = require('../../scripts/helper');
 const { createPaginationCollectorAsync } = require('../../scripts/discord/pagination-helpers')
 const {
@@ -76,14 +75,14 @@ const listGroupsAsync = async (interaction) => {
       paginationType
     }) => {
       if (paginationType !== 'init')
-        i.deferUpdate();
+        await i.deferUpdate();
 
       let messageOptions = {
         content: await buildListGroupsMessageAsync(pageNo, itemsPerPage, noOfPages),
         components: [paginationRow]
       };
 
-      i.editReply(messageOptions);
+      await i.editReply(messageOptions);
     },
   })
 
@@ -139,7 +138,7 @@ const listGroupMembersAsync = async (interaction, groupName) => {
       paginationType
     }) => {
       if (paginationType !== 'init')
-        i.deferUpdate();
+        await i.deferUpdate();
 
       let messageOptions = {
         content: await buildListGroupMembersMessageAsync(
@@ -147,7 +146,7 @@ const listGroupMembersAsync = async (interaction, groupName) => {
         components: [paginationRow]
       };
 
-      i.editReply(messageOptions);
+      await i.editReply(messageOptions);
     },
   })
 
