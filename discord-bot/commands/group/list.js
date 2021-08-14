@@ -74,8 +74,19 @@ const listGroupsAsync = async (interaction) => {
       paginationRow,
       paginationType
     }) => {
-      if (paginationType !== 'init')
+      if (paginationType !== 'init') {
         await i.deferUpdate();
+
+        // Temporarily disable the buttons whilst processing te request
+        await i.editReply({
+          content: i.message.content,
+          components: [...i.message.components].map(r => {
+            if (r.type === 'ACTION_ROW')
+              r.components = r.components.map(x => x.setDisabled(true))
+            return r;
+          })
+        });
+      }
 
       let messageOptions = {
         content: await buildListGroupsMessageAsync(pageNo, itemsPerPage, noOfPages),
@@ -137,8 +148,19 @@ const listGroupMembersAsync = async (interaction, groupName) => {
       paginationRow,
       paginationType
     }) => {
-      if (paginationType !== 'init')
+      if (paginationType !== 'init') {
         await i.deferUpdate();
+
+        // Temporarily disable the buttons whilst processing te request
+        await i.editReply({
+          content: i.message.content,
+          components: [...i.message.components].map(r => {
+            if (r.type === 'ACTION_ROW')
+              r.components = r.components.map(x => x.setDisabled(true))
+            return r;
+          })
+        });
+      }
 
       let messageOptions = {
         content: await buildListGroupMembersMessageAsync(
