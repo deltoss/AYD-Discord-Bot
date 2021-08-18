@@ -73,10 +73,8 @@ client.on("messageCreate", function(message) {
     return;
   }
 
-  lastResponseTime = now;
-  
-
   if (yogaRegex.test(message.content) && !antiYogaRegex.test(message.content)) {
+    lastResponseTime = now;
     const responseNumber = Math.floor(Math.random() * 3);
     if (responseNumber === 0)
       message.reply(`\nThe YogaDelt cult is shady & cursed. ${sweatEmoji}`
@@ -88,6 +86,7 @@ client.on("messageCreate", function(message) {
       message.reply(`\nThose YogaDelt cultists has a horrible history of spamming & crashing poor innocent bots! ${giveUpEmoji}`
         + `\nJoin the Lord Smiley's cult today to put a stop to this tyranny! ${pumpedEmoji}`);
   } else if (yoruCrossFitRegex.test(message.content)) {
+    lastResponseTime = now;
     const responseNumber = Math.floor(Math.random() * 2);
     if (responseNumber === 0)
       message.reply(`\nDid you know Scintilla was added to the game in honour of Yoru's amazing gains!`
