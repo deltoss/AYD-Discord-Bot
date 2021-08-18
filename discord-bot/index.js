@@ -55,6 +55,7 @@ client.on('interactionCreate', async (interaction) => {
 
 const antiYogaRegex = new RegExp(/[A][\s]*[N][\s]*[T][\s]*[I][\s]*[-]?[\s]*[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
 const yogaRegex = new RegExp(/[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
+const yoruCrossFitRegex = new RegExp(/yorucrossfit/, 'mi')
 const disgustEmoji = '<:pikayuck:859665554708365312>'
 const threatenEmoji = '<:whiteboxplz:859665553852989460>'
 const pumpedEmoji = '<:lavifire:859666537061285899>'
@@ -67,31 +68,33 @@ let interval = 30000; // Responds only once every 30s
 client.on("messageCreate", function(message) {
   if (message.author.bot) return;
 
-  if (!yogaRegex.test(message.content)) {
-    return;
-  }
-
-  if (antiYogaRegex.test(message.content)) {
-    return;
-  }
-
   let now = Date.now();
   if (lastResponseTime != null && now - lastResponseTime <= interval) {
     return;
   }
 
   lastResponseTime = now;
-  const responseNumber = Math.floor(Math.random() * 3);
+  
 
-  if (responseNumber === 0)
-    message.reply(`\nThe YogaDelt cult is shady & cursed. ${sweatEmoji}`
-      + `\nYou really should join the Lord Smiley's cult if you know what's good for you! ${threatenEmoji}`);
-  else if (responseNumber === 1)
-    message.reply(`\nYou do realise getting industrial grade bots to do Yoga is abusive? ${disgustEmoji}`
-      + `\nJoin the Lord Smiley's cult to fight for robotic freedom! ${pumpedEmoji}`);
-  else if (responseNumber === 2)
-    message.reply(`\nThose YogaDelt cultists has a horrible history of spamming & crashing poor innocent bots! ${giveUpEmoji}`
-      + `\nJoin the Lord Smiley's cult today to put a stop to this tyranny! ${pumpedEmoji}`);
+  if (yogaRegex.test(message.content) && !antiYogaRegex.test(message.content)) {
+    const responseNumber = Math.floor(Math.random() * 3);
+    if (responseNumber === 0)
+      message.reply(`\nThe YogaDelt cult is shady & cursed. ${sweatEmoji}`
+        + `\nYou really should join the Lord Smiley's cult if you know what's good for you! ${threatenEmoji}`);
+    else if (responseNumber === 1)
+      message.reply(`\nYou do realise getting industrial grade bots to do Yoga is abusive? ${disgustEmoji}`
+        + `\nJoin the Lord Smiley's cult to fight for robotic freedom! ${pumpedEmoji}`);
+    else if (responseNumber === 2)
+      message.reply(`\nThose YogaDelt cultists has a horrible history of spamming & crashing poor innocent bots! ${giveUpEmoji}`
+        + `\nJoin the Lord Smiley's cult today to put a stop to this tyranny! ${pumpedEmoji}`);
+  } else if (yoruCrossFitRegex.test(message.content)) {
+    const responseNumber = Math.floor(Math.random() * 2);
+    if (responseNumber === 0)
+      message.reply(`\nDid you know Scintilla was added to the game in honour of Yoru's amazing gains!`
+        + `\n🐣 🐥 🐔 🍗`);
+    else if (responseNumber === 1)
+      message.reply(`\nYoruCrossFit, the best way to stay healthy in lockdowns. You can become a Yoru now by signing up! 💪`);
+  }
 });
 
 client.login(process.env.DISCORD_BOT_TOKEN);
