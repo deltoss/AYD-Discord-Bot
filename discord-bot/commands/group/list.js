@@ -111,7 +111,7 @@ const buildListGroupMembersMessageAsync = async (group, interaction, pageNo, ite
   for (let i = 0; i < pagedMembers.length; i++) {
     let member = pagedMembers[i];
     let guildMember = await guild.members.fetch({ user: member.id, force: true });
-    groupMemberListMessage = groupMemberListMessage + `\n> ${(pageNo - 1) * itemsPerPage + i + 1}. ${escapeDiscord(guildMember.displayName)}`;
+    groupMemberListMessage = groupMemberListMessage + `\n> ${offset + i + 1}. ${escapeDiscord(guildMember.displayName)}`;
   }
 
   groupMemberListMessage = groupMemberListMessage + `\n\n Page ${pageNo} of ${noOfPages}.`;
