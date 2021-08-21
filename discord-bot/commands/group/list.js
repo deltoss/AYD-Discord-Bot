@@ -30,15 +30,22 @@ const buildListGroupsMessageAsync = async (pageNo, itemsPerPage, noOfPages) => {
 
   let groupListMessage = 'Here\'s all the groups:\n';
 
+  let firstTopGroupScore = 0;
+  let secondTopGroupScore = 0;
+  let thirdTopGroupScore = 0;
   groups.forEach((group, index) => {
     let symbol = '👨‍👦‍👦';
     if (pageNo === 1) {
-      if (index === 0)
+      if (firstTopGroupScore === 0 && group.memberCount > 0 || firstTopGroupScore > 0 && firstTopGroupScore === group.memberCount) {
+        firstTopGroupScore = group.memberCount
         symbol = '🥇'
-      else if (index === 1)
+      } else if (secondTopGroupScore === 0 && group.memberCount > 0 || secondTopGroupScore > 0 && secondTopGroupScore === group.memberCount) {
+        secondTopGroupScore = group.memberCount
         symbol = '🥈'
-      else if (index === 2)
+      } else if (thirdTopGroupScore === 0 && group.memberCount > 0 || thirdTopGroupScore > 0 && thirdTopGroupScore === group.memberCount) {
+        thirdTopGroupScore = group.memberCount
         symbol = '🥉'
+      }
     }
     groupListMessage = groupListMessage + `\n> ${symbol} \`${group.memberCount}\`: ${escapeDiscord(group.name)}`;
   });
