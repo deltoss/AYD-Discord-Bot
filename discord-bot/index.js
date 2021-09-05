@@ -55,7 +55,7 @@ client.on('interactionCreate', async (interaction) => {
 
 const antiYogaRegex = new RegExp(/[A][\s]*[N][\s]*[T][\s]*[I][\s]*[-]?[\s]*[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
 const yogaRegex = new RegExp(/[y🇾][\s]*[o0🇴][\s]*[g🇬][\s]*[a🇦]/, 'mi')
-const yoruCrossFitRegex = new RegExp(/yorucrossfit/, 'mi')
+const yoruCrossFitRegex = new RegExp(/(yoru)?(cross|x|xtra)fit/, 'mi')
 const disgustEmoji = '<:pikayuck:859665554708365312>'
 const threatenEmoji = '<:whiteboxplz:859665553852989460>'
 const pumpedEmoji = '<:lavifire:859666537061285899>'
